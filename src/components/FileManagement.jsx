@@ -36,20 +36,26 @@ function FileManagement({ data, setData }) {
   };
 
   return (
-    <div className="flex justify-between bg-slate-200 text-slate-800 p-4 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">File Management</h2>
-      <div>
+    <div className="flex justify-end  bg-slate-700 text-slate-100 p-6 shadow-lg">
+      <div className="flex items-center space-x-4">
         <button
           onClick={handleSaveToFile}
-          className="p-2 bg-slate-400 text-white rounded mr-2"
+          className="p-3 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
         >
           Export Data to JSON
         </button>
+        <label
+          htmlFor="file-upload"
+          className="p-3 bg-slate-500 text-slate-200 rounded cursor-pointer hover:bg-slate-400 transition-colors"
+        >
+          Import Data
+        </label>
         <input
+          id="file-upload"
           type="file"
           accept=".json"
           onChange={handleLoadFromFile}
-          className="p-2 border rounded"
+          className="hidden"
         />
       </div>
     </div>

@@ -11,7 +11,7 @@ function App() {
     <>
       <Navbar />
       <FileManagement data={data} setData={setData} />
-      <div className="flex justify-center bg-slate-100 min-h-screen p-8 text-slate-900">
+      <div className="flex justify-start bg-slate-100 min-h-screen p-2 gap-2 text-slate-900">
         <TodoList data={data.todos} />
         <ProjectManagement data={data.projects} />
       </div>

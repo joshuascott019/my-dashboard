@@ -80,8 +80,10 @@ function ProjectManagement() {
   };
 
   return (
-    <div className="bg-slate-200 text-slate-800 p-4 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Project Management</h2>
+    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
+      <h2 className="text-4xl font-semibold mb-6 text-slate-50">
+        Project Management
+      </h2>
       <div className="mb-4">
         <input
           type="text"
@@ -93,35 +95,39 @@ function ProjectManagement() {
             }
           }}
           placeholder="Add a new project"
-          className="p-2 border rounded"
+          className="p-3 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
+          maxLength={30}
         />
         <button
           onClick={addProject}
-          className="ml-2 p-2 bg-slate-400 text-white rounded"
+          className="ml-4 p-3 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
         >
           Add Project
         </button>
       </div>
-      <ul>
+      <ul className="flex flex-wrap justify-star gap-2">
         {projects.map((project, projectIndex) => (
-          <li
-            key={projectIndex}
-            className="mb-4 border p-4 rounded bg-slate-100"
-          >
-            <div className="flex items-center justify-between">
-              <span className={project.completed ? 'line-through' : ''}>
+          <li key={projectIndex} className="border p-6 rounded-lg bg-slate-600">
+            <div className="flex items-center justify-between border-b-2 pb-2">
+              <span
+                className={`text-slate-100 text-xl font-bold ${
+                  project.completed
+                    ? 'line-through text-slate-400 text-xl font-bold'
+                    : ''
+                }`}
+              >
                 {project.name}
               </span>
               <div>
                 <button
                   onClick={() => toggleProjectComplete(projectIndex)}
-                  className="mr-2 p-1"
+                  className="mr-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
                 >
                   ✔
                 </button>
                 <button
                   onClick={() => deleteProject(projectIndex)}
-                  className="p-1 text-red-500"
+                  className="p-2 text-red-500 hover:text-red-400 transition-colors"
                 >
                   ❌
                 </button>
@@ -129,7 +135,41 @@ function ProjectManagement() {
             </div>
 
             {/* Subtasks */}
-            <div className="ml-4 mt-2">
+            <div className="ml-4 mt-4">
+              <ul className="mt-4">
+                {project.subtasks.map((subtask, subtaskIndex) => (
+                  <li
+                    key={subtaskIndex}
+                    className="flex items-center justify-between mb-4"
+                  >
+                    <span
+                      className={`text-slate-100 ${
+                        subtask.completed ? 'line-through text-slate-400' : ''
+                      }`}
+                    >
+                      {`${subtaskIndex + 1}). ${subtask.name}`}
+                    </span>
+                    <div>
+                      <button
+                        onClick={() =>
+                          toggleSubtaskComplete(projectIndex, subtaskIndex)
+                        }
+                        className="mr-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                      >
+                        ✔
+                      </button>
+                      <button
+                        onClick={() =>
+                          deleteSubtask(projectIndex, subtaskIndex)
+                        }
+                        className="p-2 text-red-500 hover:text-red-400 transition-colors"
+                      >
+                        ❌
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
               <input
                 type="text"
                 value={subtaskInput}
@@ -140,44 +180,15 @@ function ProjectManagement() {
                   }
                 }}
                 placeholder="Add a subtask"
-                className="p-1 border rounded"
+                className="p-2 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
+                maxLength={30}
               />
               <button
                 onClick={() => addSubtask(projectIndex)}
-                className="ml-2 p-1 bg-slate-300 text-white rounded"
+                className="ml-4 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
               >
                 Add Subtask
               </button>
-              <ul className="mt-2">
-                {project.subtasks.map((subtask, subtaskIndex) => (
-                  <li
-                    key={subtaskIndex}
-                    className="flex items-center justify-between pl-2"
-                  >
-                    <span className={subtask.completed ? 'line-through' : ''}>
-                      {subtask.name}
-                    </span>
-                    <div>
-                      <button
-                        onClick={() =>
-                          toggleSubtaskComplete(projectIndex, subtaskIndex)
-                        }
-                        className="mr-2 p-1"
-                      >
-                        ✔
-                      </button>
-                      <button
-                        onClick={() =>
-                          deleteSubtask(projectIndex, subtaskIndex)
-                        }
-                        className="p-1 text-red-500"
-                      >
-                        ❌
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </div>
           </li>
         ))}
