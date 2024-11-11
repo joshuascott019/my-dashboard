@@ -36,20 +36,22 @@ function FileManagement({ data, setData }) {
   };
 
   return (
-    <div className="bg-slate-200 text-slate-800 p-4 rounded-lg mt-4">
+    <div className="flex justify-between bg-slate-200 text-slate-800 p-4 rounded-lg">
       <h2 className="text-2xl font-bold mb-4">File Management</h2>
-      <button
-        onClick={handleSaveToFile}
-        className="p-2 bg-slate-400 text-white rounded mr-2"
-      >
-        Export Data to JSON
-      </button>
-      <input
-        type="file"
-        accept=".json"
-        onChange={handleLoadFromFile}
-        className="p-2 border rounded"
-      />
+      <div>
+        <button
+          onClick={handleSaveToFile}
+          className="p-2 bg-slate-400 text-white rounded mr-2"
+        >
+          Export Data to JSON
+        </button>
+        <input
+          type="file"
+          accept=".json"
+          onChange={handleLoadFromFile}
+          className="p-2 border rounded"
+        />
+      </div>
     </div>
   );
 }

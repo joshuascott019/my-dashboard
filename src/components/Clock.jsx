@@ -9,13 +9,14 @@ function Clock() {
   }, []);
 
   return (
-    <div className="bg-slate-200 text-slate-800 p-4 rounded-lg">
-      <h2 className="text-2xl font-bold">Current Time</h2>
-      <div className="flex justify-between items-center">
-        <div>{time.toLocaleDateString()}</div>
-        <div>{time.toLocaleTimeString()}</div>
+    <div className="bg-slate-800 text-slate-100 p-6 rounded-lg shadow-lg">
+      <div className="flex flex-col items-end">
+        <div className="text-3xl font-semibold">
+          {time.toLocaleTimeString()}
+        </div>
+        <div className="text-xl">{time.toLocaleDateString()}</div>
       </div>
-      {/* Analog clock UI can be added here */}
+      {/* Analog Clock here? */}
     </div>
   );
 }
