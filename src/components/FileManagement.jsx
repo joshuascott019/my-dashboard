@@ -13,7 +13,7 @@ function FileManagement({ setData }) {
     link.click();
   };
 
-  // Import data from a JSON file and overwrite localStorage
+  // Import data from a JSON file, overwrite localStorage, and refresh page
   const handleLoadFromFile = (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -33,6 +33,9 @@ function FileManagement({ setData }) {
         // Update the state with the imported data
         setData(importedData);
         alert('Data loaded successfully!');
+
+        // Refresh the page to reflect imported data
+        window.location.reload();
       } catch (error) {
         console.error('Error loading JSON file:', error);
         alert('Failed to load data. Ensure the file is a valid JSON.');
