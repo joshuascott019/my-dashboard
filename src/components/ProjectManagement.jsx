@@ -35,7 +35,7 @@ function ProjectManagement() {
       return project;
     });
     setProjects(updatedProjects);
-    setSubtaskInput(''); // Reset the subtask input field after adding
+    setSubtaskInput(''); // Reset subtask input field
   };
 
   const toggleProjectComplete = (projectIndex) => {
@@ -87,7 +87,11 @@ function ProjectManagement() {
           type="text"
           value={projectInput}
           onChange={(e) => setProjectInput(e.target.value)}
-          onKeyDown={(e) => (e.key === 'Enter' ? addProject() : null)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              addProject();
+            }
+          }}
           placeholder="Add a new project"
           className="p-2 border rounded"
         />
@@ -130,16 +134,16 @@ function ProjectManagement() {
                 type="text"
                 value={subtaskInput}
                 onChange={(e) => setSubtaskInput(e.target.value)}
-                onKeyDown={(e) =>
-                  e.key === 'Enter' ? addSubtask(projectIndex) : null
-                }
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    addSubtask(projectIndex);
+                  }
+                }}
                 placeholder="Add a subtask"
                 className="p-1 border rounded"
               />
               <button
-                onClick={() => {
-                  addSubtask(projectIndex);
-                }}
+                onClick={() => addSubtask(projectIndex)}
                 className="ml-2 p-1 bg-slate-300 text-white rounded"
               >
                 Add Subtask
