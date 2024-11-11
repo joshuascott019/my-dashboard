@@ -2,27 +2,41 @@ import PropTypes from 'prop-types';
 
 function FileManagement({ setData }) {
   // Export data directly from localStorage
-  const handleSaveToFile = () => {
-    const projects = JSON.parse(localStorage.getItem('projects')) || [];
-    const todos = JSON.parse(localStorage.getItem('tasks')) || [];
-    const json = JSON.stringify({ projects, todos }, null, 2);
+  const handleSaveToFile = async () => {
+    try {
+      const projects = JSON.parse(localStorage.getItem('projects')) || [];
+      const todos = JSON.parse(localStorage.getItem('tasks')) || [];
+      const json = JSON.stringify({ projects, todos }, null, 2);
 
-    // Generate the default filename with date and time
-    const date = new Date();
-    const defaultFilename = `dashboard-data-${date.toLocaleDateString()}_${date
-      .toLocaleTimeString()
-      .replace(/:/g, '-')}.json`;
+      // Generate a default filename with date and time
+      const date = new Date();
+      const defaultFilename = `Dashboard-data-${date.toLocaleDateString()}_${date
+        .toLocaleTimeString()
+        .replace(/:/g, '-')}.json`;
 
-    // Prompt the user for a file name, cancel if prompt is closed
-    const filename = prompt('Enter file name', defaultFilename);
-    if (filename === null) return; // Exit if canceled
+      // Use the File System Access API to prompt for save location and filename
+      const fileHandle = await window.showSaveFilePicker({
+        suggestedName: defaultFilename,
+        types: [
+          {
+            description: 'JSON File',
+            accept: { 'application/json': ['.json'] },
+          },
+        ],
+      });
 
-    // Create and trigger the download
-    const blob = new Blob([json], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = filename;
-    link.click();
+      // Create a writable stream and write the JSON data to the file
+      const writableStream = await fileHandle.createWritable();
+      await writableStream.write(json);
+      await writableStream.close();
+
+      alert('Data exported successfully!');
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Error saving file:', error);
+        alert('Failed to save file. Please try again.');
+      }
+    }
   };
 
   // Import data from a JSON file, overwrite localStorage, and refresh page
