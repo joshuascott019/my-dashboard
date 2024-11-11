@@ -5,7 +5,7 @@ function ProjectManagement() {
     () => JSON.parse(localStorage.getItem('projects')) || []
   );
   const [projectInput, setProjectInput] = useState('');
-  const [subtaskInput, setSubtaskInput] = useState('');
+  const [subtaskInputs, setSubtaskInputs] = useState([]);
 
   useEffect(() => {
     localStorage.setItem('projects', JSON.stringify(projects));
@@ -17,11 +17,14 @@ function ProjectManagement() {
       ...projects,
       { name: projectInput, completed: false, subtasks: [] },
     ]);
+    setSubtaskInputs([...subtaskInputs, '']); // Add a new subtask input for the new project
     setProjectInput('');
   };
 
   const addSubtask = (projectIndex) => {
+    const subtaskInput = subtaskInputs[projectIndex];
     if (subtaskInput.trim() === '') return;
+
     const updatedProjects = projects.map((project, index) => {
       if (index === projectIndex) {
         return {
@@ -35,7 +38,10 @@ function ProjectManagement() {
       return project;
     });
     setProjects(updatedProjects);
-    setSubtaskInput(''); // Reset subtask input field
+
+    const updatedSubtaskInputs = [...subtaskInputs];
+    updatedSubtaskInputs[projectIndex] = ''; // Reset subtask input for the specific project
+    setSubtaskInputs(updatedSubtaskInputs);
   };
 
   const toggleProjectComplete = (projectIndex) => {
@@ -64,6 +70,9 @@ function ProjectManagement() {
 
   const deleteProject = (projectIndex) => {
     setProjects(projects.filter((_, index) => index !== projectIndex));
+    setSubtaskInputs(
+      subtaskInputs.filter((_, index) => index !== projectIndex)
+    ); // Remove the subtask input for the deleted project
   };
 
   const deleteSubtask = (projectIndex, subtaskIndex) => {
@@ -172,8 +181,12 @@ function ProjectManagement() {
               </ul>
               <input
                 type="text"
-                value={subtaskInput}
-                onChange={(e) => setSubtaskInput(e.target.value)}
+                value={subtaskInputs[projectIndex] || ''}
+                onChange={(e) => {
+                  const updatedSubtaskInputs = [...subtaskInputs];
+                  updatedSubtaskInputs[projectIndex] = e.target.value;
+                  setSubtaskInputs(updatedSubtaskInputs);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     addSubtask(projectIndex);
