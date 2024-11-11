@@ -58,7 +58,7 @@ function FileManagement({ setData }) {
 
         // Update the state with the imported data
         setData(importedData);
-        alert('Data loaded successfully!');
+        // alert('Data loaded successfully!'); CONVERT TO TOAST NOTIFICATIONS
 
         // Refresh the page to reflect imported data
         window.location.reload();
@@ -71,7 +71,7 @@ function FileManagement({ setData }) {
   };
 
   return (
-    <div className="flex justify-end bg-slate-700 text-slate-100 p-6 shadow-lg">
+    <div className="flex items-end flex-col bg-slate-700 text-slate-100 p-6 shadow-lg gap-2">
       <div className="flex items-center space-x-4">
         <button
           onClick={handleSaveToFile}
@@ -95,6 +95,10 @@ function FileManagement({ setData }) {
           className="hidden"
         />
       </div>
+      <p>
+        NOTE: This app passively saves in browser storage, but it&apos;s advised
+        to save a local copy in case of wipe.
+      </p>
     </div>
   );
 }
