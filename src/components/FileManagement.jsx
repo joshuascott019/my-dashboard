@@ -6,10 +6,22 @@ function FileManagement({ setData }) {
     const projects = JSON.parse(localStorage.getItem('projects')) || [];
     const todos = JSON.parse(localStorage.getItem('tasks')) || [];
     const json = JSON.stringify({ projects, todos }, null, 2);
+
+    // Generate the default filename with date and time
+    const date = new Date();
+    const defaultFilename = `dashboard-data-${date.toLocaleDateString()}_${date
+      .toLocaleTimeString()
+      .replace(/:/g, '-')}.json`;
+
+    // Prompt the user for a file name, cancel if prompt is closed
+    const filename = prompt('Enter file name', defaultFilename);
+    if (filename === null) return; // Exit if canceled
+
+    // Create and trigger the download
     const blob = new Blob([json], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'dashboard-data.json';
+    link.download = filename;
     link.click();
   };
 
