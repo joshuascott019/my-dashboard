@@ -88,6 +88,7 @@ function ProjectManagement() {
           type="text"
           value={projectInput}
           onChange={(e) => setProjectInput(e.target.value)}
+          onKeyDown={(e) => (e.key === 'Enter' ? addProject() : null)}
           placeholder="Add a new project"
           className="p-2 border rounded"
         />
@@ -132,6 +133,7 @@ function ProjectManagement() {
                   selectedProjectIndex === projectIndex ? subtaskInput : ''
                 }
                 onChange={(e) => setSubtaskInput(e.target.value)}
+                onKeyDown={(e) => (e.key === 'Enter' ? addSubtask() : null)}
                 placeholder="Add a subtask"
                 className="p-1 border rounded"
               />

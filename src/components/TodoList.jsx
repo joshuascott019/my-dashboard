@@ -27,6 +27,12 @@ function TodoList() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  };
+
   return (
     <div className="bg-slate-200 text-slate-800 p-4 rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Todo List</h2>
@@ -35,6 +41,7 @@ function TodoList() {
           type="text"
           value={taskInput}
           onChange={(e) => setTaskInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Add a new task"
           className="p-2 border rounded"
         />
