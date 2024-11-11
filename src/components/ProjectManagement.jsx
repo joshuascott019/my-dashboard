@@ -6,7 +6,6 @@ function ProjectManagement() {
   );
   const [projectInput, setProjectInput] = useState('');
   const [subtaskInput, setSubtaskInput] = useState('');
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('projects', JSON.stringify(projects));
@@ -36,7 +35,7 @@ function ProjectManagement() {
       return project;
     });
     setProjects(updatedProjects);
-    setSubtaskInput('');
+    setSubtaskInput(''); // Reset the subtask input field after adding
   };
 
   const toggleProjectComplete = (projectIndex) => {
@@ -129,17 +128,16 @@ function ProjectManagement() {
             <div className="ml-4 mt-2">
               <input
                 type="text"
-                value={
-                  selectedProjectIndex === projectIndex ? subtaskInput : ''
-                }
+                value={subtaskInput}
                 onChange={(e) => setSubtaskInput(e.target.value)}
-                onKeyDown={(e) => (e.key === 'Enter' ? addSubtask() : null)}
+                onKeyDown={(e) =>
+                  e.key === 'Enter' ? addSubtask(projectIndex) : null
+                }
                 placeholder="Add a subtask"
                 className="p-1 border rounded"
               />
               <button
                 onClick={() => {
-                  setSelectedProjectIndex(projectIndex);
                   addSubtask(projectIndex);
                 }}
                 className="ml-2 p-1 bg-slate-300 text-white rounded"
