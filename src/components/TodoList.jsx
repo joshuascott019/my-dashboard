@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 function TodoList() {
   const [tasks, setTasks] = useState(
@@ -6,27 +6,42 @@ function TodoList() {
   );
   const [taskInput, setTaskInput] = useState('');
 
+  // Update localStorage when tasks change
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = () => {
+  // Add a new task
+  const addTask = useCallback(() => {
     if (taskInput.trim() === '') return; // Do nothing if taskInput is empty or whitespace only
-    setTasks([...tasks, { text: taskInput, completed: false }]);
+    setTasks([
+      ...tasks,
+      { id: Date.now(), text: taskInput, completed: false }, // Add a unique id
+    ]);
     setTaskInput('');
-  };
+  }, [taskInput, tasks]);
 
-  const toggleComplete = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-  };
+  // Toggle task completion
+  const toggleComplete = useCallback(
+    (id) => {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id ? { ...task, completed: !task.completed } : task
+        )
+      );
+    },
+    [tasks]
+  );
 
-  const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
-  };
+  // Delete a task
+  const deleteTask = useCallback(
+    (id) => {
+      setTasks(tasks.filter((task) => task.id !== id));
+    },
+    [tasks]
+  );
 
+  // Handle Enter key to add task
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       addTask();
@@ -34,7 +49,7 @@ function TodoList() {
   };
 
   return (
-    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg shadow-lg w-1/4">
+    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/4">
       <h2 className="text-4xl font-semibold mb-6 text-slate-50">
         Today&apos;s Todo List
       </h2>
@@ -51,32 +66,38 @@ function TodoList() {
         <button
           onClick={addTask}
           className="ml-4 p-3 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+          disabled={!taskInput.trim()} // Disable button if input is empty
         >
           Add Task
         </button>
       </div>
       <ol className="list-decimal list-inside">
         {tasks
-          .sort((a, b) => (a.itemM > b.itemM ? 1 : -1))
-          .map((task, index) => (
-            <li key={index} className="flex items-center justify-between mb-3">
+          .sort((a, b) => a.completed - b.completed) // Sort by completion status
+          .map((task) => (
+            <li
+              key={task.id}
+              className="flex items-center justify-between mb-3"
+            >
               <span
                 className={`text-slate-100 ${
                   task.completed ? 'line-through text-slate-500' : ''
                 }`}
               >
-                {`${index + 1}). ${task.text}`}
+                {`${tasks.indexOf(task) + 1}). ${task.text}`}
               </span>
               <div>
                 <button
-                  onClick={() => toggleComplete(index)}
+                  onClick={() => toggleComplete(task.id)}
                   className="mr-2 p-2 bg-slate-600 text-slate-200 rounded hover:bg-slate-500 transition-colors"
+                  aria-label="Mark task as completed"
                 >
                   ✔
                 </button>
                 <button
-                  onClick={() => deleteTask(index)}
+                  onClick={() => deleteTask(task.id)}
                   className="p-2 text-red-500 hover:text-red-400"
+                  aria-label="Delete task"
                 >
                   ❌
                 </button>
