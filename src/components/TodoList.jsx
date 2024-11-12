@@ -96,7 +96,7 @@ function TodoList() {
               </div>
               <button
                 onClick={() => deleteTask(task.id)}
-                className="p-[2px] text-red-500 hover:text-red-400"
+                className="p-1 text-red-500 hover:text-red-400 rounded-lg border-2 border-slate-950"
                 aria-label="Delete task"
               >
                 ❌

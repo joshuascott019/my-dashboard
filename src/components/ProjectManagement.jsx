@@ -140,7 +140,7 @@ function ProjectManagement() {
               </div>
               <button
                 onClick={() => deleteProject(projectIndex)}
-                className="p-2 text-red-500 hover:text-red-400 transition-colors"
+                className="p-1 text-red-500 hover:text-red-400 transition-colors rounded-lg border"
               >
                 ❌
               </button>
@@ -173,7 +173,7 @@ function ProjectManagement() {
                     </div>
                     <button
                       onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
-                      className="p-2 text-red-500 hover:text-red-400 transition-colors"
+                      className="p-1 text-red-500 hover:text-red-400 transition-colors rounded-lg border"
                     >
                       ❌
                     </button>
