@@ -118,7 +118,7 @@ function ProjectManagement() {
         {projects.map((project, projectIndex) => (
           <li
             key={projectIndex}
-            className="border p-6 rounded-lg bg-slate-600 w-1/2"
+            className="border p-6 rounded-lg bg-slate-600 w-5/12"
           >
             <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
               <div className="flex flex-wrap w-10/12">
