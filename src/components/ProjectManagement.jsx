@@ -120,30 +120,29 @@ function ProjectManagement() {
             key={projectIndex}
             className="border p-6 rounded-lg bg-slate-600 w-1/2"
           >
-            <div className="flex flex-wrap items-center justify-between border-b-2 pb-2 overflow-hidden">
-              <span
-                className={`text-slate-100 text-xl font-bold w-3/4 overflow-hidden ${
-                  project.completed
-                    ? 'line-through text-slate-400 text-xl font-bold'
-                    : ''
-                }`}
-              >
-                {project.name}
-              </span>
-              <div>
-                <button
-                  onClick={() => toggleProjectComplete(projectIndex)}
-                  className="mr-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+            <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
+              <div className="flex flex-wrap w-10/12">
+                <input
+                  type="checkbox"
+                  onChange={() => toggleProjectComplete(projectIndex)}
+                  className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                />
+                <span
+                  className={`text-slate-100 text-xl font-bold w-3/4 overflow-hidden ${
+                    project.completed
+                      ? 'line-through text-slate-400 text-xl font-bold'
+                      : ''
+                  }`}
                 >
-                  ✔
-                </button>
-                <button
-                  onClick={() => deleteProject(projectIndex)}
-                  className="p-2 text-red-500 hover:text-red-400 transition-colors"
-                >
-                  ❌
-                </button>
+                  {project.name}
+                </span>
               </div>
+              <button
+                onClick={() => deleteProject(projectIndex)}
+                className="p-2 text-red-500 hover:text-red-400 transition-colors"
+              >
+                ❌
+              </button>
             </div>
 
             {/* Subtasks */}
@@ -152,33 +151,30 @@ function ProjectManagement() {
                 {project.subtasks.map((subtask, subtaskIndex) => (
                   <li
                     key={subtaskIndex}
-                    className="flex flex-wrap items-center justify-between mb-4 overflow-hidden"
+                    className="flex flex-wrap items-start justify-between mb-4 overflow-hidden"
                   >
-                    <span
-                      className={`text-slate-100 w-3/4 overflow-hidden ${
-                        subtask.completed ? 'line-through text-slate-400' : ''
-                      }`}
-                    >
-                      {`${subtaskIndex + 1}). ${subtask.name}`}
-                    </span>
-                    <div>
-                      <button
-                        onClick={() =>
+                    <div className="flex flex-wrap w-10/12">
+                      <input
+                        type="checkbox"
+                        onChange={() =>
                           toggleSubtaskComplete(projectIndex, subtaskIndex)
                         }
-                        className="mr-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                        className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                      />
+                      <span
+                        className={`text-slate-100 w-3/4 overflow-hidden ${
+                          subtask.completed ? 'line-through text-slate-400' : ''
+                        }`}
                       >
-                        ✔
-                      </button>
-                      <button
-                        onClick={() =>
-                          deleteSubtask(projectIndex, subtaskIndex)
-                        }
-                        className="p-2 text-red-500 hover:text-red-400 transition-colors"
-                      >
-                        ❌
-                      </button>
+                        {`${subtaskIndex + 1}). ${subtask.name}`}
+                      </span>
                     </div>
+                    <button
+                      onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
+                      className="p-2 text-red-500 hover:text-red-400 transition-colors"
+                    >
+                      ❌
+                    </button>
                   </li>
                 ))}
               </ul>

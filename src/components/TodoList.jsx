@@ -77,31 +77,29 @@ function TodoList() {
           .map((task) => (
             <li
               key={task.id}
-              className="flex flex-wrap items-center justify-between mb-3"
+              className="flex flex-wrap items-start justify-between mb-6"
             >
-              <span
-                className={`text-slate-100 ${
-                  task.completed ? 'line-through text-slate-500' : ''
-                }`}
-              >
-                {`${tasks.indexOf(task) + 1}). ${task.text}`}
-              </span>
-              <div>
-                <button
-                  onClick={() => toggleComplete(task.id)}
-                  className="mr-2 p-2 bg-slate-600 text-slate-200 rounded hover:bg-slate-500 transition-colors"
-                  aria-label="Mark task as completed"
+              <div className="flex flex-wrap w-10/12">
+                <input
+                  type="checkbox"
+                  onChange={() => toggleComplete(task.id)}
+                  className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                />
+                <span
+                  className={`text-slate-100 w-10/12 overflow-hidden ${
+                    task.completed ? 'line-through text-slate-500' : ''
+                  }`}
                 >
-                  ✔
-                </button>
-                <button
-                  onClick={() => deleteTask(task.id)}
-                  className="p-2 text-red-500 hover:text-red-400"
-                  aria-label="Delete task"
-                >
-                  ❌
-                </button>
+                  {task.text}
+                </span>
               </div>
+              <button
+                onClick={() => deleteTask(task.id)}
+                className="p-[2px] text-red-500 hover:text-red-400"
+                aria-label="Delete task"
+              >
+                ❌
+              </button>
             </li>
           ))}
       </ol>
