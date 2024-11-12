@@ -84,6 +84,7 @@ function TodoList() {
                   type="checkbox"
                   onChange={() => toggleComplete(task.id)}
                   className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                  checked={task.completed}
                 />
                 <span
                   className={`text-slate-100 w-10/12 overflow-hidden ${

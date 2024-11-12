@@ -126,6 +126,7 @@ function ProjectManagement() {
                   type="checkbox"
                   onChange={() => toggleProjectComplete(projectIndex)}
                   className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                  checked={project.completed}
                 />
                 <span
                   className={`text-slate-100 text-xl font-bold w-3/4 overflow-hidden ${
@@ -160,6 +161,7 @@ function ProjectManagement() {
                           toggleSubtaskComplete(projectIndex, subtaskIndex)
                         }
                         className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                        checked={subtask.completed}
                       />
                       <span
                         className={`text-slate-100 w-3/4 overflow-hidden ${
