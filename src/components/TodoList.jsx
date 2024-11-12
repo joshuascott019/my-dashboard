@@ -61,7 +61,7 @@ function TodoList() {
           onKeyDown={handleKeyDown}
           placeholder="Add a new task"
           className="p-3 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
-          maxLength={30}
+          maxLength={60}
         />
         <button
           onClick={addTask}
@@ -71,13 +71,13 @@ function TodoList() {
           Add Task
         </button>
       </div>
-      <ol className="list-decimal list-inside">
+      <ol className="list-decimal list-inside w-12/12 overflow-hidden">
         {tasks
           .sort((a, b) => a.completed - b.completed) // Sort by completion status
           .map((task) => (
             <li
               key={task.id}
-              className="flex items-center justify-between mb-3"
+              className="flex flex-wrap items-center justify-between mb-3"
             >
               <span
                 className={`text-slate-100 ${

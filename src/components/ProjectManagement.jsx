@@ -105,7 +105,7 @@ function ProjectManagement() {
           }}
           placeholder="Add a new project"
           className="p-3 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
-          maxLength={30}
+          maxLength={60}
         />
         <button
           onClick={addProject}
@@ -114,12 +114,15 @@ function ProjectManagement() {
           Add Project
         </button>
       </div>
-      <ul className="flex flex-wrap justify-star gap-2">
+      <ul className="flex flex-wrap justify-star gap-8">
         {projects.map((project, projectIndex) => (
-          <li key={projectIndex} className="border p-6 rounded-lg bg-slate-600">
-            <div className="flex items-center justify-between border-b-2 pb-2">
+          <li
+            key={projectIndex}
+            className="border p-6 rounded-lg bg-slate-600 w-1/2"
+          >
+            <div className="flex flex-wrap items-center justify-between border-b-2 pb-2 overflow-hidden">
               <span
-                className={`text-slate-100 text-xl font-bold ${
+                className={`text-slate-100 text-xl font-bold w-3/4 overflow-hidden ${
                   project.completed
                     ? 'line-through text-slate-400 text-xl font-bold'
                     : ''
@@ -149,10 +152,10 @@ function ProjectManagement() {
                 {project.subtasks.map((subtask, subtaskIndex) => (
                   <li
                     key={subtaskIndex}
-                    className="flex items-center justify-between mb-4"
+                    className="flex flex-wrap items-center justify-between mb-4 overflow-hidden"
                   >
                     <span
-                      className={`text-slate-100 ${
+                      className={`text-slate-100 w-3/4 overflow-hidden ${
                         subtask.completed ? 'line-through text-slate-400' : ''
                       }`}
                     >
@@ -194,7 +197,7 @@ function ProjectManagement() {
                 }}
                 placeholder="Add a subtask"
                 className="p-2 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
-                maxLength={30}
+                maxLength={60}
               />
               <button
                 onClick={() => addSubtask(projectIndex)}
