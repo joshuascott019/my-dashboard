@@ -168,7 +168,7 @@ function ProjectManagement() {
                           subtask.completed ? 'line-through text-slate-400' : ''
                         }`}
                       >
-                        {`${subtaskIndex + 1}). ${subtask.name}`}
+                        {subtask.name}
                       </span>
                     </div>
                     <button
