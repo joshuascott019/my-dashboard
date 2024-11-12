@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import Clock from './Clock';
 import { HiCog } from 'react-icons/hi'; // Importing the gear icon from react-icons
+import FileManagement from './FileManagement';
 
-const Navbar = () => {
+// eslint-disable-next-line react/prop-types
+const Navbar = ({ data, setData }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // State to manage the settings window visibility
 
   const toggleSettings = () => {
@@ -25,7 +27,7 @@ const Navbar = () => {
       {/* Settings Window */}
       {isSettingsOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="relative bg-slate-700 p-6 rounded-lg shadow-lg w-80">
+          <div className="relative bg-slate-700 p-6 rounded-lg shadow-lg w-160">
             <h2 className="text-2xl font-semibold text-white">Settings</h2>
 
             {/* Close Button */}
@@ -39,6 +41,7 @@ const Navbar = () => {
             <div className="mt-4 text-white">
               {/* Add any settings content here */}
               <p>[SETTINGS CONTENT GOES HERE]</p>
+              <FileManagement data={data} setData={setData} />
             </div>
           </div>
         </div>
