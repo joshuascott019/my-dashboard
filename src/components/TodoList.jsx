@@ -61,7 +61,7 @@ function TodoList() {
           onKeyDown={handleKeyDown}
           placeholder="Add a new task"
           className="p-3 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
-          maxLength={60}
+          maxLength={120}
         />
         <button
           onClick={addTask}
