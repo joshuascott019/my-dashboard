@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+// import { FaCheckSquare } from 'react-icons/fa';
+import { FaSquareXmark } from 'react-icons/fa6';
+// import { MdEditSquare } from 'react-icons/md';
 
 function ProjectManagement() {
   const [projects, setProjects] = useState(
@@ -138,12 +141,25 @@ function ProjectManagement() {
                   {project.name}
                 </span>
               </div>
-              <button
-                onClick={() => deleteProject(projectIndex)}
-                className="p-1 text-red-500 hover:text-red-400 transition-colors rounded-lg border"
+              {/* <button
+                title="Edit"
+                className="text-2xl text-slate-400 hover:text-slate-300"
               >
-                ❌
+                <MdEditSquare />
+              </button> */}
+              <button
+                title="Delete"
+                onClick={() => deleteProject(projectIndex)}
+                className="text-2xl text-red-300 hover:text-red-400"
+              >
+                <FaSquareXmark />
               </button>
+              {/* <button
+                title="Complete"
+                className="text-2xl text-green-400 hover:text-green-300"
+              >
+                <FaCheckSquare />
+              </button> */}
             </div>
 
             {/* Subtasks */}
@@ -171,12 +187,25 @@ function ProjectManagement() {
                         {subtask.name}
                       </span>
                     </div>
-                    <button
-                      onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
-                      className="p-1 text-red-500 hover:text-red-400 transition-colors rounded-lg border"
+                    {/* <button
+                      title="Edit"
+                      className="text-2xl text-slate-400 hover:text-slate-300"
                     >
-                      ❌
+                      <MdEditSquare />
+                    </button> */}
+                    <button
+                      title="Delete"
+                      onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
+                      className="text-2xl text-red-300 hover:text-red-400"
+                    >
+                      <FaSquareXmark />
                     </button>
+                    {/* <button
+                      title="Complete"
+                      className="text-2xl text-green-400 hover:text-green-300"
+                    >
+                      <FaCheckSquare />
+                    </button> */}
                   </li>
                 ))}
               </ul>

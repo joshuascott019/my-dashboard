@@ -71,7 +71,7 @@ function FileManagement({ setData }) {
   };
 
   return (
-    <div className="flex items-end flex-col bg-slate-700 text-slate-100 p-6 shadow-lg gap-2">
+    <div className="flex items-end flex-col bg-slate-700 text-slate-100 p-6 gap-2">
       <p>
         NOTE: This app passively saves in browser storage, so it&apos;s advised
         to save a local copy to prevent data loss.

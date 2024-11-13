@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
+// import { FaCheckSquare } from 'react-icons/fa';
+import { FaSquareXmark } from 'react-icons/fa6';
+// import { MdEditSquare } from 'react-icons/md';
 
 function TodoList() {
   const [tasks, setTasks] = useState(
@@ -79,7 +82,7 @@ function TodoList() {
               key={task.id}
               className="flex flex-wrap items-start justify-between mb-6"
             >
-              <div className="flex flex-wrap w-10/12">
+              <div className="flex flex-wrap w-9/12">
                 <input
                   type="checkbox"
                   onChange={() => toggleComplete(task.id)}
@@ -94,13 +97,27 @@ function TodoList() {
                   {task.text}
                 </span>
               </div>
-              <button
-                onClick={() => deleteTask(task.id)}
-                className="p-1 text-red-500 hover:text-red-400 rounded-lg border-2 border-slate-950"
-                aria-label="Delete task"
-              >
-                ❌
-              </button>
+              <div className="flex gap-2">
+                {/* <button
+                  title="Edit"
+                  className="text-2xl text-slate-400 hover:text-slate-300"
+                >
+                  <MdEditSquare />
+                </button> */}
+                <button
+                  title="Delete"
+                  onClick={() => deleteTask(task.id)}
+                  className="text-2xl text-red-300 hover:text-red-400"
+                >
+                  <FaSquareXmark />
+                </button>
+                {/* <button
+                  title="Complete"
+                  className="text-2xl text-green-400 hover:text-green-300"
+                >
+                  <FaCheckSquare />
+                </button> */}
+              </div>
             </li>
           ))}
       </ol>
