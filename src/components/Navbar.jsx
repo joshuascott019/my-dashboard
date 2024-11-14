@@ -1,10 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import Clock from './Clock';
 import { HiCog } from 'react-icons/hi';
 import SettingsModal from './SettingsModal';
 
-// eslint-disable-next-line react/prop-types
-const Navbar = ({ data, setData }) => {
+const Navbar = ({
+  data,
+  setData,
+  is24HourFormat,
+  setIs24HourFormat,
+  isAnalog,
+  setIsAnalog,
+}) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleSettings = () => {
@@ -15,7 +22,7 @@ const Navbar = ({ data, setData }) => {
     <div className="bg-slate-800 text-white p-4 flex justify-between items-center shadow-lg">
       <h1 className="text-3xl font-bold">My Dashboard</h1>
       <div className="flex items-center space-x-4">
-        <Clock />
+        <Clock is24HourFormat={is24HourFormat} isAnalog={isAnalog} />
         <button
           className="text-white hover:text-slate-400 transition-colors"
           onClick={toggleSettings}
@@ -31,6 +38,10 @@ const Navbar = ({ data, setData }) => {
         onClose={toggleSettings}
         data={data}
         setData={setData}
+        is24HourFormat={is24HourFormat}
+        setIs24HourFormat={setIs24HourFormat}
+        isAnalog={isAnalog}
+        setIsAnalog={setIsAnalog}
       />
     </div>
   );

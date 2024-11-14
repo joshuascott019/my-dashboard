@@ -1,7 +1,16 @@
+/* eslint-disable react/prop-types */
 import FileManagement from './FileManagement';
 
-// eslint-disable-next-line react/prop-types
-const SettingsModal = ({ isOpen, onClose, data, setData }) => {
+const SettingsModal = ({
+  isOpen,
+  onClose,
+  data,
+  setData,
+  is24HourFormat,
+  setIs24HourFormat,
+  isAnalog,
+  setIsAnalog,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -21,6 +30,28 @@ const SettingsModal = ({ isOpen, onClose, data, setData }) => {
         <div className="mt-4 text-white">
           {/* Add any settings content here */}
           <p>[SETTINGS CONTENT GOES HERE]</p>
+          <div className="mt-4">
+            <label className="text-white font-medium">Clock Format:</label>
+            <select
+              className="ml-2 p-2 rounded bg-slate-600 text-white"
+              value={is24HourFormat ? '24' : '12'}
+              onChange={(e) => setIs24HourFormat(e.target.value === '24')}
+            >
+              <option value="12">12-Hour</option>
+              <option value="24">24-Hour</option>
+            </select>
+          </div>
+          <div className="mt-4">
+            <label className="text-white font-medium">Clock Display:</label>
+            <select
+              className="ml-2 p-2 rounded bg-slate-600 text-white"
+              value={isAnalog ? 'analog' : 'digital'}
+              onChange={(e) => setIsAnalog(e.target.value === 'analog')}
+            >
+              <option value="digital">Digital</option>
+              <option value="analog">Analog</option>
+            </select>
+          </div>
           <FileManagement data={data} setData={setData} />
         </div>
       </div>
