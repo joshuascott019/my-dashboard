@@ -1,20 +1,17 @@
 import PropTypes from 'prop-types';
 
 function FileManagement({ setData }) {
-  // Export data directly from localStorage
   const handleSaveToFile = async () => {
     try {
       const projects = JSON.parse(localStorage.getItem('projects')) || [];
       const todos = JSON.parse(localStorage.getItem('tasks')) || [];
       const json = JSON.stringify({ projects, todos }, null, 2);
 
-      // Generate a default filename with date and time
       const date = new Date();
       const defaultFilename = `Dashboard-data-${date.toLocaleDateString()}_${date
         .toLocaleTimeString()
         .replace(/:/g, '-')}.json`;
 
-      // Use the File System Access API to prompt for save location and filename
       const fileHandle = await window.showSaveFilePicker({
         suggestedName: defaultFilename,
         types: [
@@ -25,7 +22,6 @@ function FileManagement({ setData }) {
         ],
       });
 
-      // Create a writable stream and write the JSON data to the file
       const writableStream = await fileHandle.createWritable();
       await writableStream.write(json);
       await writableStream.close();
@@ -39,7 +35,6 @@ function FileManagement({ setData }) {
     }
   };
 
-  // Import data from a JSON file, overwrite localStorage, and refresh page
   const handleLoadFromFile = (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -49,18 +44,14 @@ function FileManagement({ setData }) {
       try {
         const importedData = JSON.parse(e.target.result);
 
-        // Update localStorage directly
         localStorage.setItem(
           'projects',
           JSON.stringify(importedData.projects || [])
         );
         localStorage.setItem('tasks', JSON.stringify(importedData.todos || []));
 
-        // Update the state with the imported data
         setData(importedData);
-        // alert('Data loaded successfully!'); CONVERT TO TOAST NOTIFICATIONS
 
-        // Refresh the page to reflect imported data
         window.location.reload();
       } catch (error) {
         console.error('Error loading JSON file:', error);
@@ -103,7 +94,6 @@ function FileManagement({ setData }) {
   );
 }
 
-// Updated PropTypes validation
 FileManagement.propTypes = {
   setData: PropTypes.func.isRequired,
 };

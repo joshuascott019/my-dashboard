@@ -20,7 +20,7 @@ function ProjectManagement() {
       ...projects,
       { name: projectInput, completed: false, subtasks: [] },
     ]);
-    setSubtaskInputs([...subtaskInputs, '']); // Add a new subtask input for the new project
+    setSubtaskInputs([...subtaskInputs, '']);
     setProjectInput('');
   };
 
@@ -43,7 +43,7 @@ function ProjectManagement() {
     setProjects(updatedProjects);
 
     const updatedSubtaskInputs = [...subtaskInputs];
-    updatedSubtaskInputs[projectIndex] = ''; // Reset subtask input for the specific project
+    updatedSubtaskInputs[projectIndex] = '';
     setSubtaskInputs(updatedSubtaskInputs);
   };
 
@@ -75,7 +75,7 @@ function ProjectManagement() {
     setProjects(projects.filter((_, index) => index !== projectIndex));
     setSubtaskInputs(
       subtaskInputs.filter((_, index) => index !== projectIndex)
-    ); // Remove the subtask input for the deleted project
+    );
   };
 
   const deleteSubtask = (projectIndex, subtaskIndex) => {

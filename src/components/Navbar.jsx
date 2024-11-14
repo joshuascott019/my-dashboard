@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import Clock from './Clock';
-import { HiCog } from 'react-icons/hi'; // Importing the gear icon from react-icons
+import { HiCog } from 'react-icons/hi';
 import FileManagement from './FileManagement';
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ data, setData }) => {
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false); // State to manage the settings window visibility
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleSettings = () => {
-    setIsSettingsOpen(!isSettingsOpen); // Toggle the settings window
+    setIsSettingsOpen(!isSettingsOpen);
   };
 
   return (
@@ -18,7 +18,7 @@ const Navbar = ({ data, setData }) => {
         <Clock />
         <button
           className="text-white hover:text-slate-400 transition-colors"
-          onClick={toggleSettings} // Toggle the settings window when clicked
+          onClick={toggleSettings}
         >
           <HiCog size={24} />
         </button>
@@ -32,7 +32,7 @@ const Navbar = ({ data, setData }) => {
 
             {/* Close Button */}
             <button
-              onClick={toggleSettings} // Close settings when X is clicked
+              onClick={toggleSettings}
               className="absolute top-1 right-3 text-white text-2xl"
             >
               &times;

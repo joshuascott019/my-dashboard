@@ -9,22 +9,16 @@ function TodoList() {
   );
   const [taskInput, setTaskInput] = useState('');
 
-  // Update localStorage when tasks change
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Add a new task
   const addTask = useCallback(() => {
-    if (taskInput.trim() === '') return; // Do nothing if taskInput is empty or whitespace only
-    setTasks([
-      ...tasks,
-      { id: Date.now(), text: taskInput, completed: false }, // Add a unique id
-    ]);
+    if (taskInput.trim() === '') return;
+    setTasks([...tasks, { id: Date.now(), text: taskInput, completed: false }]);
     setTaskInput('');
   }, [taskInput, tasks]);
 
-  // Toggle task completion
   const toggleComplete = useCallback(
     (id) => {
       setTasks(
@@ -36,7 +30,6 @@ function TodoList() {
     [tasks]
   );
 
-  // Delete a task
   const deleteTask = useCallback(
     (id) => {
       setTasks(tasks.filter((task) => task.id !== id));
@@ -44,7 +37,6 @@ function TodoList() {
     [tasks]
   );
 
-  // Handle Enter key to add task
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       addTask();
@@ -69,14 +61,14 @@ function TodoList() {
         <button
           onClick={addTask}
           className="ml-4 p-3 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
-          disabled={!taskInput.trim()} // Disable button if input is empty
+          disabled={!taskInput.trim()}
         >
           Add Task
         </button>
       </div>
       <ol className="list-decimal list-inside w-12/12 overflow-hidden">
         {tasks
-          .sort((a, b) => a.completed - b.completed) // Sort by completion status
+          .sort((a, b) => a.completed - b.completed)
           .map((task) => (
             <li
               key={task.id}
