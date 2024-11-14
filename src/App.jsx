@@ -1,12 +1,24 @@
 import Navbar from './components/Navbar';
 import TodoList from './components/TodoList';
 import ProjectManagement from './components/ProjectManagement';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const loadSettings = () => {
+    const is24HourFormat = localStorage.getItem('is24HourFormat') === 'true';
+    const isAnalog = localStorage.getItem('isAnalog') === 'true';
+    return { is24HourFormat, isAnalog };
+  };
   const [data, setData] = useState({ todos: [], projects: [] });
-  const [is24HourFormat, setIs24HourFormat] = useState(false);
-  const [isAnalog, setIsAnalog] = useState(false);
+  const [is24HourFormat, setIs24HourFormat] = useState(
+    loadSettings().is24HourFormat
+  );
+  const [isAnalog, setIsAnalog] = useState(loadSettings().isAnalog);
+
+  useEffect(() => {
+    localStorage.setItem('is24HourFormat', is24HourFormat);
+    localStorage.setItem('isAnalog', isAnalog);
+  }, [is24HourFormat, isAnalog]);
 
   return (
     <>

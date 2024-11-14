@@ -26,20 +26,55 @@ function Clock({ isAnalog, is24HourFormat }) {
           </>
         ) : (
           <div className="flex justify-center items-center mt-2">
-            <div className="relative w-24 h-24 border-4 border-slate-100 rounded-full flex justify-center items-center">
+            <div className="relative w-32 h-32 border-4 border-slate-100 rounded-full flex justify-center items-center">
+              {/* Hour Hand */}
               <div
-                className="absolute w-8 h-1 bg-slate-100 origin-bottom"
-                style={{ transform: `rotate(${hoursRotation}deg)` }}
+                className="absolute bg-slate-100 origin-bottom"
+                style={{
+                  width: '4px',
+                  height: '30%',
+                  top: '19%', // Align the base with the center of the clock
+                  left: '49%',
+                  transform: `rotate(${hoursRotation}deg)`,
+                }}
               />
+              {/* Minute Hand */}
               <div
-                className="absolute w-10 h-1 bg-slate-300 origin-bottom"
-                style={{ transform: `rotate(${minutesRotation}deg)` }}
+                className="absolute bg-slate-300 origin-bottom"
+                style={{
+                  width: '2px',
+                  height: '40%',
+                  top: '10%', // Align the base with the center of the clock
+                  left: '49%',
+                  transform: `rotate(${minutesRotation}deg)`,
+                }}
               />
+              {/* Second Hand */}
               <div
-                className="absolute w-12 h-0.5 bg-red-500 origin-bottom"
-                style={{ transform: `rotate(${secondsRotation}deg)` }}
+                className="absolute bg-red-500 origin-bottom"
+                style={{
+                  width: '2px',
+                  height: '45%', // Adjust the height relative to clock size
+                  top: '5%',
+                  left: '50%',
+                  transform: `rotate(${secondsRotation}deg)`,
+                }}
               />
               <div className="w-2 h-2 bg-red-500 rounded-full absolute" />
+              <div className="text-sm mt-14">{time.toLocaleDateString()}</div>
+              {/* Hour Marks */}
+              {Array.from({ length: 12 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="absolute w-1 h-2 bg-slate-100"
+                  style={{
+                    top: '47%',
+                    left: '48%',
+                    transform: `rotate(${index * 30}deg) translateY(700%)`, // 30deg * index for each hour mark
+                    transformOrigin: 'center center',
+                  }}
+                />
+              ))}
             </div>
           </div>
         )}
