@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Clock from './Clock';
 import { HiCog } from 'react-icons/hi';
-import FileManagement from './FileManagement';
+import SettingsModal from './SettingsModal';
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ data, setData }) => {
@@ -19,33 +19,19 @@ const Navbar = ({ data, setData }) => {
         <button
           className="text-white hover:text-slate-400 transition-colors"
           onClick={toggleSettings}
+          aria-label="Settings"
         >
           <HiCog size={24} />
         </button>
       </div>
 
-      {/* Settings Window */}
-      {isSettingsOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="relative bg-slate-700 p-6 rounded-lg shadow-lg w-160">
-            <h2 className="text-2xl font-semibold text-white">Settings</h2>
-
-            {/* Close Button */}
-            <button
-              onClick={toggleSettings}
-              className="absolute top-1 right-3 text-white text-2xl"
-            >
-              &times;
-            </button>
-
-            <div className="mt-4 text-white">
-              {/* Add any settings content here */}
-              <p>[SETTINGS CONTENT GOES HERE]</p>
-              <FileManagement data={data} setData={setData} />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Render Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={toggleSettings}
+        data={data}
+        setData={setData}
+      />
     </div>
   );
 };
