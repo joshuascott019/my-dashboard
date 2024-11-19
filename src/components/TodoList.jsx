@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 // import { FaCheckSquare } from 'react-icons/fa';
 import { FaSquareXmark } from 'react-icons/fa6';
-// import { MdEditSquare } from 'react-icons/md';
+import { MdEditSquare } from 'react-icons/md';
 
 function TodoList() {
   const [tasks, setTasks] = useState(
@@ -33,6 +33,22 @@ function TodoList() {
   const deleteTask = useCallback(
     (id) => {
       setTasks(tasks.filter((task) => task.id !== id));
+    },
+    [tasks]
+  );
+
+  const editTask = useCallback(
+    (id) => {
+      const taskToEdit = tasks.find((task) => task.id === id);
+      if (!taskToEdit) return;
+      const newText = prompt('Edit Task', taskToEdit.text);
+      if (newText && newText.trim() !== '') {
+        setTasks(
+          tasks.map((task) =>
+            task.id === id ? { ...task, text: newText } : task
+          )
+        );
+      }
     },
     [tasks]
   );
@@ -90,12 +106,13 @@ function TodoList() {
                 </span>
               </div>
               <div className="flex gap-2">
-                {/* <button
+                <button
                   title="Edit"
+                  onClick={() => editTask(task.id)}
                   className="text-2xl text-slate-400 hover:text-slate-300"
                 >
                   <MdEditSquare />
-                </button> */}
+                </button>
                 <button
                   title="Delete"
                   onClick={() => deleteTask(task.id)}
