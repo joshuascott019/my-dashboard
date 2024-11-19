@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // import { FaCheckSquare } from 'react-icons/fa';
 import { FaSquareXmark } from 'react-icons/fa6';
-// import { MdEditSquare } from 'react-icons/md';
+import { MdEditSquare } from 'react-icons/md';
 
 function ProjectManagement() {
   const [projects, setProjects] = useState(
@@ -91,6 +91,38 @@ function ProjectManagement() {
     setProjects(updatedProjects);
   };
 
+  const editProject = (projectIndex) => {
+    const projectToEdit = projects[projectIndex];
+    if (!projectToEdit) return;
+    const newName = prompt('Edit Project Name', projectToEdit.name);
+    if (newName && newName.trim() !== '') {
+      const updatedProjects = projects.map((project, index) =>
+        index === projectIndex ? { ...project, name: newName } : project
+      );
+      setProjects(updatedProjects);
+    }
+  };
+
+  const editSubtask = (projectIndex, subtaskIndex) => {
+    const subtaskToEdit = projects[projectIndex]?.subtasks[subtaskIndex];
+    if (!subtaskToEdit) return;
+    const newSubtaskName = prompt('Edit Subtask Name', subtaskToEdit.name);
+    if (newSubtaskName && newSubtaskName.trim() !== '') {
+      const updatedProjects = projects.map((project, pIndex) => {
+        if (pIndex === projectIndex) {
+          const updatedSubtasks = project.subtasks.map((subtask, sIndex) =>
+            sIndex === subtaskIndex
+              ? { ...subtask, name: newSubtaskName }
+              : subtask
+          );
+          return { ...project, subtasks: updatedSubtasks };
+        }
+        return project;
+      });
+      setProjects(updatedProjects);
+    }
+  };
+
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
       <h2 className="text-4xl font-semibold mb-6 text-slate-50">
@@ -141,12 +173,13 @@ function ProjectManagement() {
                   {project.name}
                 </span>
               </div>
-              {/* <button
+              <button
                 title="Edit"
+                onClick={() => editProject(projectIndex)}
                 className="text-2xl text-slate-400 hover:text-slate-300"
               >
                 <MdEditSquare />
-              </button> */}
+              </button>
               <button
                 title="Delete"
                 onClick={() => deleteProject(projectIndex)}
@@ -187,12 +220,13 @@ function ProjectManagement() {
                         {subtask.name}
                       </span>
                     </div>
-                    {/* <button
+                    <button
                       title="Edit"
+                      onClick={() => editSubtask(projectIndex, subtaskIndex)}
                       className="text-2xl text-slate-400 hover:text-slate-300"
                     >
                       <MdEditSquare />
-                    </button> */}
+                    </button>
                     <button
                       title="Delete"
                       onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
