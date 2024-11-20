@@ -9,6 +9,7 @@ function ProjectManagement() {
   );
   const [projectInput, setProjectInput] = useState('');
   const [subtaskInputs, setSubtaskInputs] = useState([]);
+  const [expandedProjects, setExpandedProjects] = useState([]);
 
   useEffect(() => {
     localStorage.setItem('projects', JSON.stringify(projects));
@@ -123,6 +124,14 @@ function ProjectManagement() {
     }
   };
 
+  const toggleExpandProject = (projectIndex) => {
+    setExpandedProjects((prev) =>
+      prev.includes(projectIndex)
+        ? prev.filter((index) => index !== projectIndex)
+        : [...prev, projectIndex]
+    );
+  };
+
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
       <h2 className="text-4xl font-semibold mb-6 text-slate-50">
@@ -152,8 +161,9 @@ function ProjectManagement() {
       <ul className="flex flex-wrap justify-star gap-8">
         {projects.map((project, projectIndex) => (
           <li
+            onClick={() => toggleExpandProject(projectIndex)}
             key={projectIndex}
-            className="border p-6 rounded-lg bg-slate-600 w-5/12"
+            className="border p-6 rounded-lg bg-slate-600 w-5/12 cursor-pointer"
           >
             <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
               <div className="flex flex-wrap w-10/12">
@@ -196,77 +206,88 @@ function ProjectManagement() {
             </div>
 
             {/* Subtasks */}
-            <div className="ml-4 mt-4">
-              <ul className="mt-4">
-                {project.subtasks.map((subtask, subtaskIndex) => (
-                  <li
-                    key={subtaskIndex}
-                    className="flex flex-wrap items-start justify-between mb-4 overflow-hidden"
-                  >
-                    <div className="flex flex-wrap w-10/12">
-                      <input
-                        type="checkbox"
-                        onChange={() =>
-                          toggleSubtaskComplete(projectIndex, subtaskIndex)
-                        }
-                        className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
-                        checked={subtask.completed}
-                      />
-                      <span
-                        className={`text-slate-100 w-3/4 overflow-hidden ${
-                          subtask.completed ? 'line-through text-slate-400' : ''
-                        }`}
+            {/* Toggle Subtasks */}
+            {/* <button
+              onClick={() => toggleExpandProject(projectIndex)}
+              className="mt-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors w-full"
+            >
+              {expandedProjects.includes(projectIndex)
+                ? 'Hide Subtasks'
+                : 'Show Subtasks'}
+            </button> */}
+
+            {/* Subtasks */}
+            {expandedProjects.includes(projectIndex) && (
+              <div className="ml-4 mt-4">
+                <ul className="mt-4">
+                  {project.subtasks.map((subtask, subtaskIndex) => (
+                    <li
+                      key={subtaskIndex}
+                      className="flex flex-wrap items-start justify-between mb-4 overflow-hidden"
+                    >
+                      <div className="flex flex-wrap w-10/12">
+                        <input
+                          type="checkbox"
+                          onChange={() =>
+                            toggleSubtaskComplete(projectIndex, subtaskIndex)
+                          }
+                          className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                          checked={subtask.completed}
+                        />
+                        <span
+                          className={`text-slate-100 w-3/4 overflow-hidden ${
+                            subtask.completed
+                              ? 'line-through text-slate-400'
+                              : ''
+                          }`}
+                        >
+                          {subtask.name}
+                        </span>
+                      </div>
+                      <button
+                        title="Edit"
+                        onClick={() => editSubtask(projectIndex, subtaskIndex)}
+                        className="text-2xl text-slate-400 hover:text-slate-300"
                       >
-                        {subtask.name}
-                      </span>
-                    </div>
-                    <button
-                      title="Edit"
-                      onClick={() => editSubtask(projectIndex, subtaskIndex)}
-                      className="text-2xl text-slate-400 hover:text-slate-300"
-                    >
-                      <MdEditSquare />
-                    </button>
-                    <button
-                      title="Delete"
-                      onClick={() => deleteSubtask(projectIndex, subtaskIndex)}
-                      className="text-2xl text-red-300 hover:text-red-400"
-                    >
-                      <FaSquareXmark />
-                    </button>
-                    {/* <button
-                      title="Complete"
-                      className="text-2xl text-green-400 hover:text-green-300"
-                    >
-                      <FaCheckSquare />
-                    </button> */}
-                  </li>
-                ))}
-              </ul>
-              <input
-                type="text"
-                value={subtaskInputs[projectIndex] || ''}
-                onChange={(e) => {
-                  const updatedSubtaskInputs = [...subtaskInputs];
-                  updatedSubtaskInputs[projectIndex] = e.target.value;
-                  setSubtaskInputs(updatedSubtaskInputs);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    addSubtask(projectIndex);
-                  }
-                }}
-                placeholder="Add a subtask"
-                className="p-2 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
-                maxLength={120}
-              />
-              <button
-                onClick={() => addSubtask(projectIndex)}
-                className="ml-4 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
-              >
-                Add Subtask
-              </button>
-            </div>
+                        <MdEditSquare />
+                      </button>
+                      <button
+                        title="Delete"
+                        onClick={() =>
+                          deleteSubtask(projectIndex, subtaskIndex)
+                        }
+                        className="text-2xl text-red-300 hover:text-red-400"
+                      >
+                        <FaSquareXmark />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <input
+                  type="text"
+                  value={subtaskInputs[projectIndex] || ''}
+                  onChange={(e) => {
+                    const updatedSubtaskInputs = [...subtaskInputs];
+                    updatedSubtaskInputs[projectIndex] = e.target.value;
+                    setSubtaskInputs(updatedSubtaskInputs);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      addSubtask(projectIndex);
+                    }
+                  }}
+                  placeholder="Add a subtask"
+                  className="p-2 bg-slate-600 text-slate-200 border border-slate-500 rounded focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  maxLength={120}
+                />
+                <button
+                  onClick={() => addSubtask(projectIndex)}
+                  className="ml-4 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                >
+                  Add Subtask
+                </button>
+              </div>
+            )}
           </li>
         ))}
       </ul>
