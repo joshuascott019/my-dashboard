@@ -161,7 +161,7 @@ function ProjectManagement() {
       <ul className="flex flex-wrap justify-star gap-8">
         {projects.map((project, projectIndex) => (
           <li
-            onClick={() => toggleExpandProject(projectIndex)}
+            // onClick={() => toggleExpandProject(projectIndex)}
             key={projectIndex}
             className="border p-6 rounded-lg bg-slate-600 w-5/12 cursor-pointer"
           >
@@ -207,14 +207,14 @@ function ProjectManagement() {
 
             {/* Subtasks */}
             {/* Toggle Subtasks */}
-            {/* <button
+            <button
               onClick={() => toggleExpandProject(projectIndex)}
               className="mt-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors w-full"
             >
               {expandedProjects.includes(projectIndex)
                 ? 'Hide Subtasks'
                 : 'Show Subtasks'}
-            </button> */}
+            </button>
 
             {/* Subtasks */}
             {expandedProjects.includes(projectIndex) && (
