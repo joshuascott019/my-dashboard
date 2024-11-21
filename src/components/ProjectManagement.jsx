@@ -190,7 +190,7 @@ function ProjectManagement() {
                   {project.name}
                 </span>
                 <span className="text-sm">
-                  Tasks Completed:{' '}
+                  Subtasks Completed:{' '}
                   {
                     project.subtasks.filter((subtask) => subtask.completed)
                       .length
