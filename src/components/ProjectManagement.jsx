@@ -135,7 +135,9 @@ function ProjectManagement() {
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
       <h2 className="text-4xl font-semibold mb-6 text-slate-50">
-        Project Management
+        Project Management (
+        {projects.filter((project) => project.completed).length}/
+        {projects.length})
       </h2>
       <div className="mb-4">
         <input
@@ -174,13 +176,21 @@ function ProjectManagement() {
                   checked={project.completed}
                 />
                 <span
-                  className={`text-slate-100 text-xl font-bold w-3/4 overflow-hidden ${
+                  className={`text-slate-100 text-2xl font-bold w-3/4 overflow-hidden ${
                     project.completed
                       ? 'line-through text-slate-400 text-xl font-bold'
                       : ''
                   }`}
                 >
                   {project.name}
+                </span>
+                <span className="text-sm">
+                  Tasks Completed:{' '}
+                  {
+                    project.subtasks.filter((subtask) => subtask.completed)
+                      .length
+                  }
+                  /{project.subtasks.length}
                 </span>
               </div>
               <button
