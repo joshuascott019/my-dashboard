@@ -61,12 +61,17 @@ function TodoList() {
 
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/4">
-      <h2 className="text-4xl font-semibold mb-6 text-slate-50">
-        Today&apos;s Todo List ({tasks.filter((task) => task.completed).length}/
-        {tasks.length})
+      <h2 className="text-4xl font-semibold text-slate-50">
+        Today&apos;s Todo List
       </h2>
-      <span className="text-sm"></span>
-      <div className="mb-4">
+      <span className="text-sm">
+        {tasks.length === 0
+          ? ''
+          : `Tasks Completed: ${
+              tasks.filter((task) => task.completed).length
+            }/${tasks.length}`}
+      </span>
+      <div className="my-6">
         <input
           type="text"
           value={taskInput}

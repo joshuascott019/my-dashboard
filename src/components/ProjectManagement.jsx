@@ -134,12 +134,17 @@ function ProjectManagement() {
 
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
-      <h2 className="text-4xl font-semibold mb-6 text-slate-50">
-        Project Management (
-        {projects.filter((project) => project.completed).length}/
-        {projects.length})
+      <h2 className="text-4xl font-semibold text-slate-50">
+        Project Management
       </h2>
-      <div className="mb-4">
+      <span className="text-sm">
+        {projects.length === 0
+          ? ''
+          : `Projects Completed: ${
+              projects.filter((project) => project.completed).length
+            }/${projects.length}`}
+      </span>
+      <div className="my-6">
         <input
           type="text"
           value={projectInput}
