@@ -4,9 +4,15 @@ import { FaSquareXmark } from 'react-icons/fa6';
 import { MdEditSquare } from 'react-icons/md';
 
 function ProjectManagement() {
-  const [projects, setProjects] = useState(
-    () => JSON.parse(localStorage.getItem('projects')) || []
-  );
+  const [projects, setProjects] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('projects')) || [];
+    } catch (error) {
+      console.error('Failed to parse projects from localStorage:', error);
+      return [];
+    }
+  });
+
   const [projectInput, setProjectInput] = useState('');
   const [subtaskInputs, setSubtaskInputs] = useState([]);
   const [expandedProjects, setExpandedProjects] = useState([]);
