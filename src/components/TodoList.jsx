@@ -1,12 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useCallback } from 'react';
 // import { FaCheckSquare } from 'react-icons/fa';
 import { FaSquareXmark } from 'react-icons/fa6';
 import { MdEditSquare } from 'react-icons/md';
 
-function TodoList() {
-  const [tasks, setTasks] = useState(
-    () => JSON.parse(localStorage.getItem('tasks')) || []
-  );
+function TodoList({ tasks, setTasks }) {
   const [taskInput, setTaskInput] = useState('');
 
   useEffect(() => {
@@ -23,16 +21,13 @@ function TodoList() {
     setTaskInput('');
   }, [taskInput, tasks]);
 
-  const toggleComplete = useCallback(
-    (id) => {
-      setTasks(
-        tasks.map((task) =>
-          task.id === id ? { ...task, completed: !task.completed } : task
-        )
-      );
-    },
-    [tasks]
-  );
+  const toggleComplete = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
 
   const deleteTask = useCallback(
     (id) => {

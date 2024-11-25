@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 // import { FaCheckSquare } from 'react-icons/fa';
 import { FaSquareXmark } from 'react-icons/fa6';
 import { MdEditSquare } from 'react-icons/md';
 
-function ProjectManagement() {
+function ProjectManagement({ addTaskToTodoList }) {
   const [projects, setProjects] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('projects')) || [];
@@ -24,6 +25,14 @@ function ProjectManagement() {
       console.error('Failed to save projects to localStorage:', error);
     }
   }, [projects]);
+
+  const handleSubtaskClick = (projectIndex, subtaskIndex) => {
+    const subtask = projects[projectIndex].subtasks[subtaskIndex];
+    if (subtask) {
+      // Add the subtask to the TodoList when clicked
+      addTaskToTodoList(subtask);
+    }
+  };
 
   const addProject = () => {
     if (projectInput.trim() === '') return;
@@ -267,11 +276,15 @@ function ProjectManagement() {
                           checked={subtask.completed}
                         />
                         <span
-                          className={`text-slate-100 w-3/4 overflow-hidden ${
+                          className={`text-slate-100 w-3/4 overflow-hidden cursor-pointer ${
                             subtask.completed
                               ? 'line-through text-slate-400'
                               : ''
                           }`}
+                          onClick={() =>
+                            handleSubtaskClick(projectIndex, subtaskIndex)
+                          }
+                          title="Click to add to Todo List"
                         >
                           {subtask.name}
                         </span>
