@@ -10,7 +10,11 @@ function TodoList() {
   const [taskInput, setTaskInput] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    try {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    } catch (e) {
+      console.error('Failed to save tasks to localStorage:', e);
+    }
   }, [tasks]);
 
   const addTask = useCallback(() => {
@@ -42,10 +46,14 @@ function TodoList() {
       const taskToEdit = tasks.find((task) => task.id === id);
       if (!taskToEdit) return;
       const newText = prompt('Edit Task', taskToEdit.text);
-      if (newText && newText.trim() !== '') {
+      if (
+        newText &&
+        newText.trim() !== '' &&
+        !tasks.some((task) => task.text === newText.trim())
+      ) {
         setTasks(
           tasks.map((task) =>
-            task.id === id ? { ...task, text: newText } : task
+            task.id === id ? { ...task, text: newText.trim() } : task
           )
         );
       }
