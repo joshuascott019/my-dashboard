@@ -19,7 +19,7 @@ function TodoList({ tasks, setTasks }) {
     if (taskInput.trim() === '') return;
     setTasks([...tasks, { id: Date.now(), text: taskInput, completed: false }]);
     setTaskInput('');
-  }, [taskInput, tasks]);
+  }, [setTasks, taskInput, tasks]);
 
   const toggleComplete = (id) => {
     setTasks(
@@ -33,7 +33,7 @@ function TodoList({ tasks, setTasks }) {
     (id) => {
       setTasks(tasks.filter((task) => task.id !== id));
     },
-    [tasks]
+    [setTasks, tasks]
   );
 
   const editTask = useCallback(
@@ -53,7 +53,7 @@ function TodoList({ tasks, setTasks }) {
         );
       }
     },
-    [tasks]
+    [setTasks, tasks]
   );
 
   const handleKeyDown = (event) => {
