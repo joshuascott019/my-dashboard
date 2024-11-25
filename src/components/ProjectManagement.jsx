@@ -18,11 +18,19 @@ function ProjectManagement() {
   const [expandedProjects, setExpandedProjects] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem('projects', JSON.stringify(projects));
+    try {
+      localStorage.setItem('projects', JSON.stringify(projects));
+    } catch (error) {
+      console.error('Failed to save projects to localStorage:', error);
+    }
   }, [projects]);
 
   const addProject = () => {
     if (projectInput.trim() === '') return;
+    if (projects.some((project) => project.name === projectInput.trim())) {
+      alert('Project name already exists.');
+      return;
+    }
     setProjects([
       ...projects,
       { name: projectInput, completed: false, subtasks: [] },
@@ -34,7 +42,14 @@ function ProjectManagement() {
   const addSubtask = (projectIndex) => {
     const subtaskInput = subtaskInputs[projectIndex];
     if (subtaskInput.trim() === '') return;
-
+    if (
+      projects[projectIndex].subtasks.some(
+        (subtask) => subtask.name === subtaskInput.trim()
+      )
+    ) {
+      alert('Subtask name already exists.');
+      return;
+    }
     const updatedProjects = projects.map((project, index) => {
       if (index === projectIndex) {
         return {
@@ -174,7 +189,6 @@ function ProjectManagement() {
       <ul className="flex flex-wrap justify-star gap-8">
         {projects.map((project, projectIndex) => (
           <li
-            // onClick={() => toggleExpandProject(projectIndex)}
             key={projectIndex}
             className="border p-6 rounded-lg bg-slate-600 w-5/12 h-min"
           >
@@ -196,12 +210,9 @@ function ProjectManagement() {
                   {project.name}
                 </span>
                 <span className="text-sm">
-                  Subtasks Completed:{' '}
-                  {
-                    project.subtasks.filter((subtask) => subtask.completed)
-                      .length
-                  }
-                  /{project.subtasks.length}
+                  Subtasks Completed:
+                  {project.subtasks.filter((s) => s.completed).length} /
+                  {project.subtasks.length}
                 </span>
               </div>
               <button
