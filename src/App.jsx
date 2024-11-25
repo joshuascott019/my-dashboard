@@ -3,22 +3,26 @@ import TodoList from './components/TodoList';
 import ProjectManagement from './components/ProjectManagement';
 import { useState, useEffect } from 'react';
 
-function App() {
-  const loadSettings = () => {
-    const is24HourFormat = localStorage.getItem('is24HourFormat') === 'true';
-    const isAnalog = localStorage.getItem('isAnalog') === 'true';
-    return { is24HourFormat, isAnalog };
-  };
-  const [data, setData] = useState({ todos: [], projects: [] });
-  const [is24HourFormat, setIs24HourFormat] = useState(
-    loadSettings().is24HourFormat
-  );
-  const [isAnalog, setIsAnalog] = useState(loadSettings().isAnalog);
+const useLocalStorageState = (key, defaultValue) => {
+  const [state, setState] = useState(() => {
+    const saved = localStorage.getItem(key);
+    return saved !== null ? JSON.parse(saved) : defaultValue;
+  });
 
   useEffect(() => {
-    localStorage.setItem('is24HourFormat', is24HourFormat);
-    localStorage.setItem('isAnalog', isAnalog);
-  }, [is24HourFormat, isAnalog]);
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  return [state, setState];
+};
+
+function App() {
+  const [data, setData] = useState({ todos: [], projects: [] });
+  const [is24HourFormat, setIs24HourFormat] = useLocalStorageState(
+    'is24HourFormat',
+    false
+  );
+  const [isAnalog, setIsAnalog] = useLocalStorageState('isAnalog', false);
 
   return (
     <>
@@ -30,7 +34,6 @@ function App() {
         isAnalog={isAnalog}
         setIsAnalog={setIsAnalog}
       />
-
       <div className="flex justify-start bg-slate-100 min-h-screen p-2 gap-2 text-slate-900">
         <TodoList todos={data.todos} />
         <ProjectManagement projects={data.projects} />
