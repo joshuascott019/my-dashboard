@@ -162,6 +162,12 @@ function ProjectManagement({ addTaskToTodoList }) {
     );
   };
 
+  const [priority, setPriority] = useState('Medium');
+
+  const handleChange = (event) => {
+    setPriority(event.target.value);
+  };
+
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
       <h2 className="text-4xl font-semibold text-slate-50">
@@ -202,27 +208,44 @@ function ProjectManagement({ addTaskToTodoList }) {
             className="border p-6 rounded-lg bg-slate-600 w-5/12 h-min"
           >
             <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
-              <div className="flex flex-wrap w-10/12">
-                <input
-                  type="checkbox"
-                  onChange={() => toggleProjectComplete(projectIndex)}
-                  className="w-6 h-6 mr-2 mt-1 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
-                  checked={project.completed}
-                />
-                <span
-                  className={`text-slate-100 text-2xl font-bold w-3/4 overflow-hidden ${
-                    project.completed
-                      ? 'line-through text-slate-400 text-xl font-bold'
-                      : ''
-                  }`}
-                >
-                  {project.name}
-                </span>
-                <span className="text-sm">
-                  Subtasks Completed:{' '}
-                  {project.subtasks.filter((s) => s.completed).length}/
-                  {project.subtasks.length}
-                </span>
+              <div className="flex flex-wrap flex-col w-10/12">
+                <div className="flex justify-between">
+                  <span className="text-sm">
+                    Subtasks Completed:{' '}
+                    {project.subtasks.filter((s) => s.completed).length}/
+                    {project.subtasks.length}
+                  </span>
+                  <div>
+                    <label htmlFor="">Priority:</label>
+                    <select
+                      id="priority"
+                      value={priority}
+                      onChange={handleChange}
+                      className="text-slate-950 mx-1"
+                    >
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    onChange={() => toggleProjectComplete(projectIndex)}
+                    className="w-6 h-6 mr-2 p-2 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+                    checked={project.completed}
+                  />
+                  <span
+                    className={`text-slate-100 text-2xl font-bold w-3/4 overflow-hidden ${
+                      project.completed
+                        ? 'line-through text-slate-400 text-x2 font-bold'
+                        : ''
+                    }`}
+                  >
+                    {project.name}
+                  </span>
+                </div>
               </div>
               <button
                 title="Edit"
