@@ -162,12 +162,6 @@ function ProjectManagement({ addTaskToTodoList }) {
     );
   };
 
-  const [priority, setPriority] = useState('Medium');
-
-  const handleChange = (event) => {
-    setPriority(event.target.value);
-  };
-
   return (
     <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-3/4 shadow-lg">
       <h2 className="text-4xl font-semibold text-slate-50">
@@ -219,13 +213,14 @@ function ProjectManagement({ addTaskToTodoList }) {
                     <label htmlFor="">Priority:</label>
                     <select
                       id="priority"
-                      value={priority}
-                      onChange={handleChange}
+                      value={''}
+                      onChange={''}
                       className="text-slate-950 mx-1"
                     >
-                      <option value="Low">Low</option>
-                      <option value="Medium">Medium</option>
-                      <option value="High">High</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
                     </select>
                   </div>
                 </div>
