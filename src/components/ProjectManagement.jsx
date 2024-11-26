@@ -219,8 +219,8 @@ function ProjectManagement({ addTaskToTodoList }) {
                   {project.name}
                 </span>
                 <span className="text-sm">
-                  Subtasks Completed:
-                  {project.subtasks.filter((s) => s.completed).length} /
+                  Subtasks Completed:{' '}
+                  {project.subtasks.filter((s) => s.completed).length}/
                   {project.subtasks.length}
                 </span>
               </div>
