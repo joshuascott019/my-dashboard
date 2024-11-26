@@ -42,10 +42,21 @@ function ProjectManagement({ addTaskToTodoList }) {
     }
     setProjects([
       ...projects,
-      { name: projectInput, completed: false, subtasks: [] },
-    ]);
+      { name: projectInput, completed: false, subtasks: [], priority: 4 },
+    ]); // Default priority set to 4
     setSubtaskInputs([...subtaskInputs, '']);
     setProjectInput('');
+  };
+
+  const handlePriorityChange = (projectIndex, newPriority) => {
+    const updatedProjects = projects.map((project, index) =>
+      index === projectIndex ? { ...project, priority: newPriority } : project
+    );
+    // Sort the updated projects by priority before updating the state
+    const sortedUpdatedProjects = updatedProjects.sort(
+      (a, b) => a.priority - b.priority
+    );
+    setProjects([...sortedUpdatedProjects]);
   };
 
   const addSubtask = (projectIndex) => {
@@ -213,8 +224,13 @@ function ProjectManagement({ addTaskToTodoList }) {
                     <label htmlFor="">Priority:</label>
                     <select
                       id="priority"
-                      value={''}
-                      onChange={''}
+                      value={project.priority}
+                      onChange={(e) =>
+                        handlePriorityChange(
+                          projectIndex,
+                          parseInt(e.target.value)
+                        )
+                      }
                       className="text-slate-950 mx-1"
                     >
                       <option value="1">1</option>
