@@ -206,11 +206,11 @@ function ProjectManagement({ addTaskToTodoList }) {
           Add Project
         </button>
       </div>
-      <ul className="flex flex-wrap justify-star gap-8">
+      <ul className="flex flex-wrap justify-start gap-8">
         {projects.map((project, projectIndex) => (
           <li
             key={projectIndex}
-            className="border p-6 rounded-lg bg-slate-600 w-5/12 h-min"
+            className="border p-6 rounded-lg bg-slate-600 w-full h-min"
           >
             <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
               <div className="flex flex-wrap flex-col w-10/12">
