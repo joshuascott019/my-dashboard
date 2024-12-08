@@ -46,7 +46,7 @@ function App() {
         isAnalog={isAnalog}
         setIsAnalog={setIsAnalog}
       />
-      <div className="flex justify-start bg-slate-100 min-h-screen p-2 gap-2 text-slate-900">
+      <div className="flex flex-col lg:flex-row justify-start bg-slate-100 min-h-screen p-2 gap-2 text-slate-900 ">
         <TodoList todos={data.todos} tasks={tasks} setTasks={setTasks} />
         <ProjectManagement
           projects={data.projects}
