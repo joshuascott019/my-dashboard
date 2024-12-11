@@ -174,7 +174,7 @@ function ProjectManagement({ addTaskToTodoList }) {
   };
 
   return (
-    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-full shadow-lg">
+    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg w-full h-screen shadow-lg">
       <h2 className="text-4xl font-semibold text-slate-50">
         Project Management
       </h2>

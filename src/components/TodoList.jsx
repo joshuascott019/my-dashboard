@@ -63,7 +63,7 @@ function TodoList({ tasks, setTasks }) {
   };
 
   return (
-    <div className="bg-slate-700 text-slate-100 p-6 rounded-lg shadow-lg w-full sm:w-2/3 md:w-1/2 lg:w-1/4">
+    <div className="bg-slate-700 text-slate-100 px-3 py-6 rounded-lg shadow-lg w-full xl:w-1/4">
       <h2 className="text-4xl font-semibold text-slate-50">
         Today&apos;s Todo List
       </h2>
@@ -74,7 +74,7 @@ function TodoList({ tasks, setTasks }) {
               tasks.filter((task) => task.completed).length
             }/${tasks.length}`}
       </span>
-      <div className="my-6">
+      <div className="my-6 flex xl:justify-between">
         <input
           type="text"
           value={taskInput}
@@ -86,7 +86,7 @@ function TodoList({ tasks, setTasks }) {
         />
         <button
           onClick={addTask}
-          className="ml-4 p-3 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
+          className="p-2 ml-4 xl:ml-1 bg-slate-500 text-slate-200 rounded hover:bg-slate-400 transition-colors"
           disabled={!taskInput.trim()}
         >
           Add Task
