@@ -213,31 +213,47 @@ function ProjectManagement({ addTaskToTodoList }) {
             className="border p-6 rounded-lg bg-slate-600 w-full h-min"
           >
             <div className="flex flex-wrap items-start justify-between border-b-2 pb-2 overflow-hidden">
-              <div className="flex flex-wrap flex-col w-10/12">
+              <div className="flex flex-wrap flex-col w-full">
                 <div className="flex justify-between">
                   <span className="text-sm">
                     Subtasks Completed:{' '}
                     {project.subtasks.filter((s) => s.completed).length}/
                     {project.subtasks.length}
                   </span>
-                  <div>
-                    <label htmlFor="">Priority:</label>
-                    <select
-                      id="priority"
-                      value={project.priority}
-                      onChange={(e) =>
-                        handlePriorityChange(
-                          projectIndex,
-                          parseInt(e.target.value)
-                        )
-                      }
-                      className="text-slate-950 mx-1"
+                  <div className="flex gap-4">
+                    <div>
+                      <label htmlFor="">Priority:</label>
+                      <select
+                        id="priority"
+                        value={project.priority}
+                        onChange={(e) =>
+                          handlePriorityChange(
+                            projectIndex,
+                            parseInt(e.target.value)
+                          )
+                        }
+                        className="text-slate-950 mx-1"
+                      >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
+                    </div>
+                    <button
+                      title="Edit"
+                      onClick={() => editProject(projectIndex)}
+                      className="text-2xl text-slate-400 hover:text-slate-300"
                     >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
+                      <MdEditSquare />
+                    </button>
+                    <button
+                      title="Delete"
+                      onClick={() => deleteProject(projectIndex)}
+                      className="text-2xl text-red-300 hover:text-red-400"
+                    >
+                      <FaSquareXmark />
+                    </button>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -258,20 +274,6 @@ function ProjectManagement({ addTaskToTodoList }) {
                   </span>
                 </div>
               </div>
-              <button
-                title="Edit"
-                onClick={() => editProject(projectIndex)}
-                className="text-2xl text-slate-400 hover:text-slate-300"
-              >
-                <MdEditSquare />
-              </button>
-              <button
-                title="Delete"
-                onClick={() => deleteProject(projectIndex)}
-                className="text-2xl text-red-300 hover:text-red-400"
-              >
-                <FaSquareXmark />
-              </button>
               {/* <button
                 title="Complete"
                 className="text-2xl text-green-400 hover:text-green-300"
